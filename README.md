@@ -10,12 +10,6 @@
 
 > Create easy state machines with your existing code
 
-## Install
-
-```sh
-go get github.com/bykof/stateful
-```
-
 ## Usage 
 
 It is very easy to use stateful.
