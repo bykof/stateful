@@ -19,6 +19,7 @@
 1. [Usage](#usage)
 2. [Draw graph](#draw-graph)
 3. [Wildcards](#wildcards)
+4. [Examples](#examples)
 
 ## Usage 
 
@@ -171,7 +172,10 @@ This will give you the opportunity to jump e.g. B to AllStates.
 
 *Keep in mind that `AllStates` creates a lot of complexity and maybe a missbehavior. 
 So use it only if you are knowing what you are doing*
-  
+ 
+## Examples
+
+Have a look at the examples: [src/examples](https://github.com/bykof/stateful/tree/master/src/examples) 
 
 
 ## Run tests
