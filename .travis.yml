@@ -7,4 +7,5 @@ go:
 install: true
 
 script:
+  - go mod vendor
   - go test -v -vet=all ./...
