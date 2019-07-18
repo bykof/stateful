@@ -40,10 +40,12 @@ func NewMyMachine() MyMachine {
     }
 }
 
+// GetState and SetState implement interface stateful 
 func (mm MyMachine) GetState() stateful.State {
     return mm.state
 }
 
+// GetState and SetState implement interface stateful
 func (mm *MyMachine) SetState(state stateful.State) error {
     mm.state = state
     return nil
