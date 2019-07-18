@@ -1,0 +1,10 @@
+language: go
+
+go:
+  - 1.x
+  - 1.12.x
+
+install: true
+
+script:
+  - go test -v -vet=all ./...
