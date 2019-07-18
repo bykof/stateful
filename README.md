@@ -15,6 +15,11 @@
 
 > Create easy state machines with your existing code
 
+# Table of Contents
+1. [Usage](#usage)
+2. [Draw graph](#draw-graph)
+3. [Wildcards](#wildcards)
+
 ## Usage 
 
 It is very easy to use stateful.
