@@ -23,7 +23,7 @@ type (
         amount  int
     }
 	
-	AmountParams struct {
+    AmountParams struct {
         Amount  int
     }
 )
