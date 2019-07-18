@@ -138,6 +138,25 @@ which is actually this graph:
 
 ![MyMachine Transition Graph](https://github.com/bykof/stateful/raw/master/docs/resources/myMachine.png)
 
+## Wildcards
+
+You can also address `wildcards as SourceStates or DestinationStates
+
+```
+stateMachine.AddTransition(
+    myMachine.FromBToAllStates,
+    stateful.States{B},
+    stateful.States{stateful.AllStates},
+)
+```
+
+This will give you the opportunity to jump e.g. B to AllStates.
+
+*Keep in mind that `AllStates` creates a lot of complexity and maybe a missbehavior. 
+So use it only if you are knowing what you are doing*
+  
+
+
 ## Run tests
 
 ```sh
