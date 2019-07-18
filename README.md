@@ -6,6 +6,9 @@
   <a href="https://twitter.com/michaelbykovski">
     <img alt="Twitter: michaelbykovski" src="https://img.shields.io/twitter/follow/michaelbykovski.svg?style=social" target="_blank" />
   </a>
+  <a href="https://travis-ci.org/bykof/stateful">
+      <img alt="Travis CI" src="https://travis-ci.org/bykof/stateful.svg?branch=master" target="_blank" />
+    </a>
 </p>
 
 > Create easy state machines with your existing code
