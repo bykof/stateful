@@ -136,7 +136,7 @@ digraph  {
 
 which is actually this graph:
 
-![MyMachine Transition Graph](https://github.com/bykof/stateful/docs/resources/myMachine.png)
+![MyMachine Transition Graph](https://github.com/bykof/stateful/raw/master/docs/resources/myMachine.png)
 
 ## Run tests
 
