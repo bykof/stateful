@@ -18,7 +18,7 @@ Just create a struct and implement the `stateful` interface
 import "github.com/bykof/stateful/src/stateful"
 
 type (
-	MyMachine struct {
+    MyMachine struct {
         state   stateful.State
         amount  int
     }
