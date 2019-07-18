@@ -34,50 +34,50 @@ type (
 )
 
 func NewMyMachine() MyMachine {
-	return MyMachine{
-		state:  A,
-		amount: 0,
-	}
+    return MyMachine{
+        state:  A,
+        amount: 0,
+    }
 }
 
 func (mm MyMachine) GetState() stateful.State {
-	return mm.state
+    return mm.state
 }
 
 func (mm *MyMachine) SetState(state stateful.State) error {
-	mm.state = state
-	return nil
+    mm.state = state
+    return nil
 }
 ```
 
 Declare some proper states:
 ```go
 const (
-	A = stateful.DefaultState("A")
-	B = stateful.DefaultState("B")
+    A = stateful.DefaultState("A")
+    B = stateful.DefaultState("B")
 )
 ```
 
 Then add some transitions to the machine:
 ```go
 func (mm *MyMachine) FromAToB(params stateful.TransitionArgs) (stateful.State, error) {
-	amountParams, ok := params.(AmountParams)
-	if !ok {
-		return nil, errors.New("could not parse AmountParams")
-	}
+    amountParams, ok := params.(AmountParams)
+    if !ok {
+        return nil, errors.New("could not parse AmountParams")
+    }
 	
-	mm.amount += amountParams.Amount
-	return B, nil
+    mm.amount += amountParams.Amount
+    return B, nil
 } 
 
 func (mm *MyMachine) FromBToA(params stateful.TransitionArgs) (stateful.State, error) {
-	amountParams, ok := params.(AmountParams)
-	if !ok {
-		return nil, errors.New("could not parse AmountParams")
-	}
+    amountParams, ok := params.(AmountParams)
+    if !ok {
+        return nil, errors.New("could not parse AmountParams")
+    }
 	
-	mm.amount -= amountParams.Amount
-	return A, nil
+    mm.amount -= amountParams.Amount
+    return A, nil
 }
 ```
 
@@ -89,8 +89,11 @@ stateMachine := &stateful.StateMachine{
 }
 
 stateMachine.AddTransition(
+    // The transition function 
     myMachine.FromAToB,
+    // SourceStates
     stateful.States{A},
+    // DestinationStates
     stateful.States{B},
 )
 
@@ -104,13 +107,15 @@ stateMachine.AddTransition(
 Everything is done! Now run the machine:
 ```go
 _ := stateMachine.Run(
-	myMachine.FromAToB, 
-	stateful.TransitionArgs(AmountParams{Amount: 1}),
+    // The transition function
+    myMachine.FromAToB, 
+    // The transition params which will be passed to the transition function
+    stateful.TransitionArgs(AmountParams{Amount: 1}),
 )
 
 _ = stateMachine.Run(
-	myMachine.FromBToA, 
-	stateful.TransitionArgs(AmountParams{Amount: 1}),
+    myMachine.FromBToA, 
+    stateful.TransitionArgs(AmountParams{Amount: 1}),
 )
 ```
 
@@ -145,7 +150,7 @@ which is actually this graph:
 
 ## Wildcards
 
-You can also address `wildcards as SourceStates or DestinationStates
+You can also address wildcards as SourceStates or DestinationStates
 
 ```
 stateMachine.AddTransition(
