@@ -3,7 +3,7 @@ package statefulGraph
 import (
 	"fmt"
 	"github.com/awalterschulze/gographviz"
-	"stateful/src/stateful"
+	"stateful"
 )
 
 type StateMachineGraph struct {

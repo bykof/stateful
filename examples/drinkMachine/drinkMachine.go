@@ -2,7 +2,7 @@ package drinkMachine
 
 import (
 	"github.com/pkg/errors"
-	"stateful/src/stateful"
+	"stateful"
 )
 
 const (

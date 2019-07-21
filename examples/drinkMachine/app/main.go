@@ -1,9 +1,9 @@
 package main
 
 import (
-	"stateful/src/stateful"
-	"stateful/src/examples/drinkMachine"
-	"stateful/src/statefulGraph"
+	"stateful"
+	"stateful/examples/drinkMachine"
+	"stateful/statefulGraph"
 )
 
 func main() {

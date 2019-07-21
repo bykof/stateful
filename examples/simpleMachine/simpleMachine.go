@@ -2,7 +2,7 @@ package simpleMachine
 
 import (
 	"errors"
-	"stateful/src/stateful"
+	"stateful"
 )
 
 const (

@@ -26,7 +26,7 @@
 It is very easy to use stateful.
 Just create a struct and implement the `stateful` interface
 ```go
-import "github.com/bykof/stateful/src/stateful"
+import "github.com/bykof/stateful"
 
 type (
     MyMachine struct {
