@@ -175,7 +175,7 @@ So use it only if you are knowing what you are doing*
  
 ## Examples
 
-Have a look at the examples: [src/examples](https://github.com/bykof/stateful/tree/master/src/examples) 
+Have a look at the examples: [examples](https://github.com/bykof/stateful/tree/master/examples) 
 
 
 ## Run tests
