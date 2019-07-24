@@ -25,6 +25,7 @@
 2. [Draw graph](#draw-graph)
 3. [Wildcards](#wildcards)
 4. [Examples](#examples)
+4. [Credits](#credits)
 
 ## Usage 
 
@@ -182,6 +183,10 @@ So use it only if you are knowing what you are doing*
 
 Have a look at the examples: [examples](https://github.com/bykof/stateful/tree/master/examples) 
 
+
+## Credits
+
+Thank you [calhoun](https://www.calhoun.io/) for the sweet gopher image! 
 
 ## Run tests
 
