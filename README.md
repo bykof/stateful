@@ -13,7 +13,7 @@
   </a>
 </p>
 
-<img align="right" width="159px" src="https://github.com/bykof/stateful/raw/master/docs/resources/gopher.png">
+<img align="center" width="159px" src="https://github.com/bykof/stateful/raw/master/docs/resources/gopher.png">
 
 > Create easy state machines with your existing code
 
