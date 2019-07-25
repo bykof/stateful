@@ -74,6 +74,7 @@ const (
 
 Then add some transitions to the machine:
 ```go
+// Declare a transition of you machine and return the new state of the machine. 
 func (mm *MyMachine) FromAToB(params stateful.TransitionArgs) (stateful.State, error) {
     amountParams, ok := params.(AmountParams)
     if !ok {
@@ -92,6 +93,11 @@ func (mm *MyMachine) FromBToA(params stateful.TransitionArgs) (stateful.State, e
 	
     mm.amount -= amountParams.Amount
     return A, nil
+}
+
+// The state machine will check, if you transfer to a proper and defined state in the machine. See below. 
+func (mm *MyMachine) FromAToNotExistingC(_ stateful.TransitionArgs) (stateful.State, error) {
+	return stateful.DefaultState("C")
 }
 ```
 
@@ -131,6 +137,26 @@ _ = stateMachine.Run(
     myMachine.FromBToA, 
     stateful.TransitionArgs(AmountParams{Amount: 1}),
 )
+
+err := stateMachine.Run(
+   myMachine.FromBToA, 
+   stateful.TransitionArgs(AmountParams{Amount: 1}),
+)
+
+// We cannot run the transition "FromBToA" from current state "A"... 
+if err != nil {
+    log.Fatal(err) // will print: you cannot run FromAToB from state A
+}
+
+// We cannot transfer the machine with current transition to returned state "C"
+err = stateMachine.Run(
+    myMachine.FromAToNotExistingC, 
+    stateful.TransitionArgs(nil),
+)
+
+if err != nil {
+	log.Fatal(err) // will print: you cannot transfer to state C 
+}
 ```
 
 That's it!
