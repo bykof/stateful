@@ -155,7 +155,7 @@ err = stateMachine.Run(
 )
 
 if err != nil {
-	log.Fatal(err) // will print: you cannot transfer to state C 
+    log.Fatal(err) // will print: you cannot transfer to state C 
 }
 ```
 
