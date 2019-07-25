@@ -3,6 +3,7 @@ package stateful
 import (
 	"errors"
 	"github.com/stretchr/testify/assert"
+	"reflect"
 	"testing"
 )
 
@@ -59,6 +60,14 @@ func (tsp *TestStatefulObject) ErrorBehavior(_ TransitionArgs) (State, error) {
 	return nil, errors.New("there was an error")
 }
 
+func (tsp TestStatefulObject) NotExistingTransition(_ TransitionArgs) (State, error) {
+	return nil, nil
+}
+
+func (tsp TestStatefulObject) FromState3ToNotExistingState(_ TransitionArgs) (State, error) {
+	return DefaultState("NotExisting"), nil
+}
+
 func NewTestStatefulObject() TestStatefulObject {
 	return TestStatefulObject{state: State1}
 }
@@ -72,6 +81,7 @@ func NewStateMachine() StateMachine {
 	stateMachine.AddTransition(testStatefulObject.FromState2And3To4, States{State2, State3}, States{State4})
 	stateMachine.AddTransition(testStatefulObject.FromState4ToState1, States{State4}, States{State1})
 	stateMachine.AddTransition(testStatefulObject.ErrorBehavior, States{AllStates}, States{State1, State2})
+	stateMachine.AddTransition(testStatefulObject.FromState3ToNotExistingState, States{State3}, States{})
 	return stateMachine
 }
 
@@ -154,8 +164,58 @@ func TestStateMachine_Run(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, State3, testStatefulObject.GetState())
 	assert.Equal(t, 2, testStatefulObject.TestValue)
+
+	err = stateMachine.Run(
+		testStatefulObject.FromState4ToState1,
+		TransitionArgs(nil),
+	)
+	assert.Error(t, err)
+	assert.Equal(
+		t,
+		reflect.TypeOf(&CannotRunFromStateError{}),
+		reflect.TypeOf(err),
+	)
+
+	err = stateMachine.Run(
+		testStatefulObject.ErrorBehavior,
+		TransitionArgs(nil),
+	)
+	assert.Error(t, err)
+	assert.Equal(t, errors.New("there was an error"), err)
+
+	err = stateMachine.Run(
+		testStatefulObject.NotExistingTransition,
+		nil,
+	)
+
+	assert.Error(t, err)
+	assert.Equal(
+		t,
+		reflect.TypeOf(&TransitionRuleNotFoundError{}),
+		reflect.TypeOf(err),
+	)
+
+	err = stateMachine.Run(
+		testStatefulObject.FromState3ToNotExistingState,
+		nil,
+	)
+
+	assert.Error(t, err)
+	assert.Equal(
+		t,
+		reflect.TypeOf(&CannotTransferToStateError{}),
+		reflect.TypeOf(err),
+	)
+
+	assert.True(t, reflect.TypeOf(&CannotTransferToStateError{}) == reflect.TypeOf(err))
 }
 
 func TestStateMachine_GetAvailableTransitions(t *testing.T) {
-
+	stateMachine := NewStateMachine()
+	availableTransitions := stateMachine.GetAvailableTransitions()
+	assert.Equal(
+		t,
+		Transition(stateMachine.StatefulObject.(*TestStatefulObject).FromState1ToState2).GetName(),
+		availableTransitions[0].GetName(),
+	)
 }

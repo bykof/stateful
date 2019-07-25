@@ -1,10 +1,5 @@
 package stateful
 
-import (
-	"fmt"
-	"github.com/pkg/errors"
-)
-
 type (
 	StateMachine struct {
 		StatefulObject  Stateful
@@ -54,22 +49,11 @@ func (sm StateMachine) Run(
 ) error {
 	transitionRule := sm.transitionRules.Find(transition)
 	if transitionRule == nil {
-		return errors.New(
-			fmt.Sprintf(
-				"no transitionRule found for given transition %s",
-				transition.GetName(),
-			),
-		)
+		return NewTransitionRuleNotFoundError(transition)
 	}
 
 	if !transitionRule.IsAllowedToRun(sm.StatefulObject.GetState()) {
-		return errors.New(
-			fmt.Sprintf(
-				"you cannot run %s from state %s",
-				transitionRule.Transition.GetName(),
-				sm.StatefulObject.GetState(),
-			),
-		)
+		return NewCannotRunFromStateError(sm, *transitionRule)
 	}
 
 	newState, err := transition(transitionArgs)
@@ -78,12 +62,7 @@ func (sm StateMachine) Run(
 	}
 
 	if !transitionRule.IsAllowedToTransfer(newState) {
-		return errors.New(
-			fmt.Sprintf(
-				"you cannot transfer to state %s",
-				newState,
-			),
-		)
+		return NewCannotTransferToStateError(newState)
 	}
 
 	err = sm.StatefulObject.SetState(newState)
