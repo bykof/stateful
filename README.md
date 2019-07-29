@@ -21,11 +21,16 @@
 > Create easy state machines with your existing code
 
 # Table of Contents
-1. [Usage](#usage)
-2. [Draw graph](#draw-graph)
-3. [Wildcards](#wildcards)
-4. [Examples](#examples)
-4. [Credits](#credits)
+1. [Documentation](#documentation)
+2. [Usage](#usage)
+3. [Draw graph](#draw-graph)
+4. [Wildcards](#wildcards)
+5. [Examples](#examples)
+6. [Credits](#credits)
+
+## Documentation
+
+You can find the documentation here: [https://godoc.org/github.com/bykof/stateful](https://godoc.org/github.com/bykof/stateful)
 
 ## Usage 
 
