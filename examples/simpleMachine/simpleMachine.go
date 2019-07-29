@@ -2,10 +2,10 @@ package simpleMachine
 
 import (
 	"errors"
-	"stateful"
+	"github.com/bykof/stateful"
 )
 
-const (
+var (
 	A = stateful.DefaultState("A")
 	B = stateful.DefaultState("B")
 )

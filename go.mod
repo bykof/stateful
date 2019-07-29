@@ -1,4 +1,4 @@
-module stateful
+module github.com/bykof/stateful
 
 go 1.12
 

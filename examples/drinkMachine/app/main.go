@@ -1,9 +1,9 @@
 package main
 
 import (
-	"stateful"
-	"stateful/examples/drinkMachine"
-	"stateful/statefulGraph"
+	"github.com/bykof/stateful"
+	"github.com/bykof/stateful/examples/drinkMachine"
+	"github.com/bykof/stateful/statefulGraph"
 )
 
 func main() {

@@ -1,8 +1,8 @@
 package drinkMachine
 
 import (
+	"github.com/bykof/stateful"
 	"github.com/pkg/errors"
-	"stateful"
 )
 
 const (
@@ -11,7 +11,7 @@ const (
 	CollectedEnoughMoney = stateful.DefaultState("CollectedEnoughMoney")
 	DroppedDrink         = stateful.DefaultState("DroppedDrink")
 	Cancelled            = stateful.DefaultState("Cancelled")
-	Maintenance         = stateful.DefaultState("Maintenance")
+	Maintenance          = stateful.DefaultState("Maintenance")
 )
 
 type (
