@@ -34,7 +34,7 @@ func NewMachine() DrinkMachine {
 	return DrinkMachine{state: stateful.DefaultState(Ready)}
 }
 
-func (m DrinkMachine) GetState() stateful.State {
+func (m DrinkMachine) State() stateful.State {
 	return m.state
 }
 
@@ -51,8 +51,8 @@ func (m DrinkMachine) GetCollectedCoins() int {
 	return m.collectedCoins
 }
 
-func (m *DrinkMachine) InsertCoin(params stateful.TransitionArgs) (stateful.State, error) {
-	coinParams, ok := params.(InsertCoinParam)
+func (m *DrinkMachine) InsertCoin(transitionArguments stateful.TransitionArguments) (stateful.State, error) {
+	coinParams, ok := transitionArguments.(InsertCoinParam)
 	if !ok {
 		return nil, errors.New("cannot parse coinparams")
 	}
@@ -64,29 +64,29 @@ func (m *DrinkMachine) InsertCoin(params stateful.TransitionArgs) (stateful.Stat
 	return m.state, nil
 }
 
-func (m *DrinkMachine) Cancel(_ stateful.TransitionArgs) (stateful.State, error) {
+func (m *DrinkMachine) Cancel(_ stateful.TransitionArguments) (stateful.State, error) {
 	return Cancelled, nil
 }
 
-func (m *DrinkMachine) GoToMaintenance(_ stateful.TransitionArgs) (stateful.State, error) {
+func (m *DrinkMachine) GoToMaintenance(_ stateful.TransitionArguments) (stateful.State, error) {
 	return Maintenance, nil
 }
 
-func (m *DrinkMachine) GoToAny(_ stateful.TransitionArgs) (stateful.State, error) {
+func (m *DrinkMachine) GoToAny(_ stateful.TransitionArguments) (stateful.State, error) {
 	return Ready, nil
 }
 
-func (m *DrinkMachine) DropChange(_ stateful.TransitionArgs) (stateful.State, error) {
+func (m *DrinkMachine) DropChange(_ stateful.TransitionArguments) (stateful.State, error) {
 	m.currentAmount = 0
 	return Ready, nil
 }
 
-func (m *DrinkMachine) DropDrink(_ stateful.TransitionArgs) (stateful.State, error) {
+func (m *DrinkMachine) DropDrink(_ stateful.TransitionArguments) (stateful.State, error) {
 	m.collectedCoins += PricePerDrink
 	m.currentAmount -= PricePerDrink
 	return DroppedDrink, nil
 }
 
-func (m *DrinkMachine) NotAvailable(_ stateful.TransitionArgs) (stateful.State, error) {
+func (m *DrinkMachine) NotAvailable(_ stateful.TransitionArguments) (stateful.State, error) {
 	return DroppedDrink, nil
 }

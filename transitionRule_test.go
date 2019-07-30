@@ -5,13 +5,13 @@ import (
 	"testing"
 )
 
-func transitionruletestA(_ TransitionArgs) (State, error) {
+func transitionruletestA(_ TransitionArguments) (State, error) {
 	return nil, nil
 }
-func transitionruletestB(_ TransitionArgs) (State, error) {
+func transitionruletestB(_ TransitionArguments) (State, error) {
 	return nil, nil
 }
-func transitionruletestC(_ TransitionArgs) (State, error) {
+func transitionruletestC(_ TransitionArguments) (State, error) {
 	return nil, nil
 }
 

@@ -25,7 +25,7 @@ type (
 	}
 )
 
-func (tsp TestStatefulObject) GetState() State {
+func (tsp TestStatefulObject) State() State {
 	return tsp.state
 }
 
@@ -34,37 +34,37 @@ func (tsp *TestStatefulObject) SetState(state State) error {
 	return nil
 }
 
-func (tsp *TestStatefulObject) FromState1ToState2(_ TransitionArgs) (State, error) {
+func (tsp *TestStatefulObject) FromState1ToState2(_ TransitionArguments) (State, error) {
 	return State2, nil
 }
 
-func (tsp *TestStatefulObject) FromState2ToState3(params TransitionArgs) (State, error) {
+func (tsp *TestStatefulObject) FromState2ToState3(params TransitionArguments) (State, error) {
 	testParam, _ := params.(TestParam)
 	tsp.TestValue += testParam.Amount
 	return State3, nil
 }
 
-func (tsp *TestStatefulObject) FromState3ToState1And2(_ TransitionArgs) (State, error) {
+func (tsp *TestStatefulObject) FromState3ToState1And2(_ TransitionArguments) (State, error) {
 	return State1, nil
 }
 
-func (tsp *TestStatefulObject) FromState2And3To4(_ TransitionArgs) (State, error) {
+func (tsp *TestStatefulObject) FromState2And3To4(_ TransitionArguments) (State, error) {
 	return State4, nil
 }
 
-func (tsp *TestStatefulObject) FromState4ToState1(_ TransitionArgs) (State, error) {
+func (tsp *TestStatefulObject) FromState4ToState1(_ TransitionArguments) (State, error) {
 	return State1, nil
 }
 
-func (tsp *TestStatefulObject) ErrorBehavior(_ TransitionArgs) (State, error) {
+func (tsp *TestStatefulObject) ErrorBehavior(_ TransitionArguments) (State, error) {
 	return nil, errors.New("there was an error")
 }
 
-func (tsp TestStatefulObject) NotExistingTransition(_ TransitionArgs) (State, error) {
+func (tsp TestStatefulObject) NotExistingTransition(_ TransitionArguments) (State, error) {
 	return nil, nil
 }
 
-func (tsp TestStatefulObject) FromState3ToNotExistingState(_ TransitionArgs) (State, error) {
+func (tsp TestStatefulObject) FromState3ToNotExistingState(_ TransitionArguments) (State, error) {
 	return DefaultState("NotExisting"), nil
 }
 
@@ -151,23 +151,23 @@ func TestStateMachine_Run(t *testing.T) {
 	testStatefulObject := stateMachine.StatefulObject.(*TestStatefulObject)
 	err := stateMachine.Run(
 		testStatefulObject.FromState1ToState2,
-		TransitionArgs(nil),
+		TransitionArguments(nil),
 	)
 	assert.NoError(t, err)
-	assert.Equal(t, State2, testStatefulObject.GetState())
+	assert.Equal(t, State2, testStatefulObject.State())
 
 	err = stateMachine.Run(
 		testStatefulObject.FromState2ToState3,
-		TransitionArgs(TestParam{Amount: 2}),
+		TransitionArguments(TestParam{Amount: 2}),
 	)
 
 	assert.NoError(t, err)
-	assert.Equal(t, State3, testStatefulObject.GetState())
+	assert.Equal(t, State3, testStatefulObject.State())
 	assert.Equal(t, 2, testStatefulObject.TestValue)
 
 	err = stateMachine.Run(
 		testStatefulObject.FromState4ToState1,
-		TransitionArgs(nil),
+		TransitionArguments(nil),
 	)
 	assert.Error(t, err)
 	assert.Equal(
@@ -178,7 +178,7 @@ func TestStateMachine_Run(t *testing.T) {
 
 	err = stateMachine.Run(
 		testStatefulObject.ErrorBehavior,
-		TransitionArgs(nil),
+		TransitionArguments(nil),
 	)
 	assert.Error(t, err)
 	assert.Equal(t, errors.New("there was an error"), err)

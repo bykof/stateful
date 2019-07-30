@@ -49,7 +49,7 @@ func (crfse CannotRunFromStateError) Error() string {
 	return fmt.Sprintf(
 		"you cannot run %s from state %s",
 		crfse.transitionRule.Transition.GetName(),
-		crfse.stateMachine.StatefulObject.GetState(),
+		crfse.stateMachine.StatefulObject.State(),
 	)
 }
 

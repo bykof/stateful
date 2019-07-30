@@ -16,7 +16,7 @@ type (
 		amount int
 	}
 
-	AmountParams struct {
+	AmountArguments struct {
 		Amount int
 	}
 )
@@ -28,7 +28,7 @@ func NewMyMachine() MyMachine {
 	}
 }
 
-func (mm MyMachine) GetState() stateful.State {
+func (mm MyMachine) State() stateful.State {
 	return mm.state
 }
 
@@ -37,22 +37,20 @@ func (mm *MyMachine) SetState(state stateful.State) error {
 	return nil
 }
 
-func (mm *MyMachine) FromAToB(params stateful.TransitionArgs) (stateful.State, error) {
-	amountParams, ok := params.(AmountParams)
+func (mm *MyMachine) FromAToB(transitionArguments stateful.TransitionArguments) (stateful.State, error) {
+	amountArguments, ok := transitionArguments.(AmountArguments)
 	if !ok {
-		return nil, errors.New("could not parse AmountParams")
+		return nil, errors.New("could not parse transitionarguments as amountarguments")
 	}
-
-	mm.amount += amountParams.Amount
+	mm.amount += amountArguments.Amount
 	return B, nil
 }
 
-func (mm *MyMachine) FromBToA(params stateful.TransitionArgs) (stateful.State, error) {
-	amountParams, ok := params.(AmountParams)
+func (mm *MyMachine) FromBToA(transitionArguments stateful.TransitionArguments) (stateful.State, error) {
+	amountArguments, ok := transitionArguments.(AmountArguments)
 	if !ok {
-		return nil, errors.New("could not parse AmountParams")
+		return nil, errors.New("could not parse transitionarguments as amountarguments")
 	}
-
-	mm.amount -= amountParams.Amount
+	mm.amount -= amountArguments.Amount
 	return A, nil
 }

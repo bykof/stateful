@@ -2,7 +2,7 @@ package stateful
 
 type (
 	Stateful interface {
-		GetState() State
+		State() State
 		SetState(state State) error
 	}
 )

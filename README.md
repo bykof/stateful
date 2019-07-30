@@ -57,12 +57,12 @@ func NewMyMachine() MyMachine {
     }
 }
 
-// GetState and SetState implement interface stateful 
-func (mm MyMachine) GetState() stateful.State {
+// State implement interface stateful 
+func (mm MyMachine) State() stateful.State {
     return mm.state
 }
 
-// GetState and SetState implement interface stateful
+//  SetState implement interface stateful
 func (mm *MyMachine) SetState(state stateful.State) error {
     mm.state = state
     return nil
@@ -80,8 +80,8 @@ const (
 Then add some transitions to the machine:
 ```go
 // Declare a transition of you machine and return the new state of the machine. 
-func (mm *MyMachine) FromAToB(params stateful.TransitionArgs) (stateful.State, error) {
-    amountParams, ok := params.(AmountParams)
+func (mm *MyMachine) FromAToB(transitionArguments stateful.TransitionArguments) (stateful.State, error) {
+    amountParams, ok := transitionArguments.(AmountParams)
     if !ok {
         return nil, errors.New("could not parse AmountParams")
     }
@@ -90,8 +90,8 @@ func (mm *MyMachine) FromAToB(params stateful.TransitionArgs) (stateful.State, e
     return B, nil
 } 
 
-func (mm *MyMachine) FromBToA(params stateful.TransitionArgs) (stateful.State, error) {
-    amountParams, ok := params.(AmountParams)
+func (mm *MyMachine) FromBToA(transitionArguments stateful.TransitionArguments) (stateful.State, error) {
+    amountParams, ok := transitionArguments.(AmountParams)
     if !ok {
         return nil, errors.New("could not parse AmountParams")
     }
@@ -101,7 +101,7 @@ func (mm *MyMachine) FromBToA(params stateful.TransitionArgs) (stateful.State, e
 }
 
 // The state machine will check, if you transfer to a proper and defined state in the machine. See below. 
-func (mm *MyMachine) FromAToNotExistingC(_ stateful.TransitionArgs) (stateful.State, error) {
+func (mm *MyMachine) FromAToNotExistingC(_ stateful.TransitionArguments) (stateful.State, error) {
 	return stateful.DefaultState("C")
 }
 ```
@@ -135,17 +135,17 @@ _ := stateMachine.Run(
     // The transition function
     myMachine.FromAToB, 
     // The transition params which will be passed to the transition function
-    stateful.TransitionArgs(AmountParams{Amount: 1}),
+    stateful.TransitionArguments(AmountParams{Amount: 1}),
 )
 
 _ = stateMachine.Run(
     myMachine.FromBToA, 
-    stateful.TransitionArgs(AmountParams{Amount: 1}),
+    stateful.TransitionArguments(AmountParams{Amount: 1}),
 )
 
 err := stateMachine.Run(
    myMachine.FromBToA, 
-   stateful.TransitionArgs(AmountParams{Amount: 1}),
+   stateful.TransitionArguments(AmountParams{Amount: 1}),
 )
 
 // We cannot run the transition "FromBToA" from current state "A"... 
@@ -156,7 +156,7 @@ if err != nil {
 // We cannot transfer the machine with current transition to returned state "C"
 err = stateMachine.Run(
     myMachine.FromAToNotExistingC, 
-    stateful.TransitionArgs(nil),
+    stateful.TransitionArguments(nil),
 )
 
 if err != nil {

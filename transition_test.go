@@ -7,17 +7,17 @@ import (
 
 type TransitionTestStruct struct{}
 
-func (tt TransitionTestStruct) abc(params TransitionArgs) (State, error) {
+func (tt TransitionTestStruct) abc(params TransitionArguments) (State, error) {
 	return nil, nil
 }
 
-func transitiontestA(_ TransitionArgs) (State, error) {
+func transitiontestA(_ TransitionArguments) (State, error) {
 	return nil, nil
 }
-func transitiontestB(_ TransitionArgs) (State, error) {
+func transitiontestB(_ TransitionArguments) (State, error) {
 	return nil, nil
 }
-func transitiontestC(_ TransitionArgs) (State, error) {
+func transitiontestC(_ TransitionArguments) (State, error) {
 	return nil, nil
 }
 

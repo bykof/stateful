@@ -45,18 +45,18 @@ func (sm StateMachine) GetAllStates() States {
 
 func (sm StateMachine) Run(
 	transition Transition,
-	transitionArgs TransitionArgs,
+	transitionArguments TransitionArguments,
 ) error {
 	transitionRule := sm.transitionRules.Find(transition)
 	if transitionRule == nil {
 		return NewTransitionRuleNotFoundError(transition)
 	}
 
-	if !transitionRule.IsAllowedToRun(sm.StatefulObject.GetState()) {
+	if !transitionRule.IsAllowedToRun(sm.StatefulObject.State()) {
 		return NewCannotRunFromStateError(sm, *transitionRule)
 	}
 
-	newState, err := transition(transitionArgs)
+	newState, err := transition(transitionArguments)
 	if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func (sm StateMachine) Run(
 func (sm StateMachine) GetAvailableTransitions() Transitions {
 	transitions := Transitions{}
 	for _, transitionRule := range sm.transitionRules {
-		if transitionRule.IsAllowedToRun(sm.StatefulObject.GetState()) {
+		if transitionRule.IsAllowedToRun(sm.StatefulObject.State()) {
 			transitions = append(transitions, transitionRule.Transition)
 		}
 	}

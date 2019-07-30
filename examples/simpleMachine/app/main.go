@@ -26,12 +26,12 @@ func main() {
 
 	_ = stateMachine.Run(
 		myMachine.FromAToB,
-		stateful.TransitionArgs(simpleMachine.AmountParams{Amount: 1}),
+		simpleMachine.AmountArguments{Amount: 1},
 	)
 
 	_ = stateMachine.Run(
 		myMachine.FromBToA,
-		stateful.TransitionArgs(simpleMachine.AmountParams{Amount: 1}),
+		simpleMachine.AmountArguments{Amount: 1},
 	)
 
 	stateMachineGraph := statefulGraph.StateMachineGraph{StateMachine: *stateMachine}
