@@ -1,12 +1,14 @@
 package stateful
 
 type (
+	// StateMachine handles the state of the StatefulObject
 	StateMachine struct {
 		StatefulObject  Stateful
 		transitionRules TransitionRules
 	}
 )
 
+// AddTransition adds a transition to the state machine.
 func (sm *StateMachine) AddTransition(
 	transition Transition,
 	sourceStates States,
@@ -22,10 +24,12 @@ func (sm *StateMachine) AddTransition(
 	)
 }
 
+// GetTransitionRules returns all transitionRules in the state machine
 func (sm StateMachine) GetTransitionRules() TransitionRules {
 	return sm.transitionRules
 }
 
+// GetAllStates returns all known and possible states by the state machine
 func (sm StateMachine) GetAllStates() States {
 	states := States{}
 	keys := make(map[State]bool)
@@ -43,6 +47,8 @@ func (sm StateMachine) GetAllStates() States {
 	return states
 }
 
+// Run runs the state machine with the given transition.
+// If the transition
 func (sm StateMachine) Run(
 	transition Transition,
 	transitionArguments TransitionArguments,

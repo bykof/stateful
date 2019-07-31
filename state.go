@@ -1,15 +1,21 @@
 package stateful
 
 const (
+	// AllStates is a wildcard which represents all states in the state machine
 	AllStates = DefaultState("*")
 )
 
 type (
+	// State represents a state of a stateful object
 	State interface {
 		GetID() string
 		IsWildCard() bool
 	}
+
+	// States are a slice of State
 	States []State
+
+	// DefaultState is a string which should be used in every stateful object as the state
 	DefaultState string
 )
 
@@ -24,7 +30,7 @@ func (ds DefaultState) GetID() string {
 	return string(ds)
 }
 
-// Contains search in States if the given state is inside the States
+// Contains search in States if the given state is inside the States.
 // It compares with GetID
 func (ss States) Contains(state State) bool {
 	for _, currentState := range ss {
