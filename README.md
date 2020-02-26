@@ -30,7 +30,7 @@
 
 ## Documentation
 
-You can find the documentation here: [https://godoc.org/github.com/bykof/stateful](https://godoc.org/github.com/bykof/stateful)
+You can find the documentation here: [https://pkg.go.dev/github.com/bykof/stateful?tab=doc](https://pkg.go.dev/github.com/bykof/stateful?tab=doc)
 
 ## Usage 
 
