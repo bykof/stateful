@@ -55,14 +55,56 @@ func (smg StateMachineGraph) DrawEdges(graph *gographviz.Graph) error {
 
 func (smg StateMachineGraph) DrawGraph() error {
 	var err error
-	graph := gographviz.NewGraph()
-
-	err = graph.SetDir(true)
+	graph, err := intializeGraphWithDir()
 	if err != nil {
 		return err
 	}
 
-	err = smg.DrawStates(graph)
+	err = smg.drawGraph(graph)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(graph.String())
+
+	return nil
+}
+
+func (smg StateMachineGraph) DrawGraphWithName(name string) error {
+	var err error
+	graph, err := intializeGraphWithDir()
+	if err != nil {
+		return err
+	}
+
+	err = graph.SetName(name)
+	if err != nil {
+		return err
+	}
+
+	err = smg.drawGraph(graph)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println(graph.String())
+
+	return nil
+}
+
+func intializeGraphWithDir() (*gographviz.Graph, error) {
+	var err error
+	graph := gographviz.NewGraph()
+
+	err = graph.SetDir(true)
+	if err != nil {
+		return nil, err
+	}
+	return graph, nil
+}
+
+func (smg StateMachineGraph) drawGraph(graph *gographviz.Graph) error {
+	err := smg.DrawStates(graph)
 	if err != nil {
 		return err
 	}
@@ -71,8 +113,5 @@ func (smg StateMachineGraph) DrawGraph() error {
 	if err != nil {
 		return err
 	}
-
-	fmt.Println(graph.String())
-
 	return nil
 }
