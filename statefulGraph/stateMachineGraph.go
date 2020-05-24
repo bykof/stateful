@@ -55,7 +55,7 @@ func (smg StateMachineGraph) DrawEdges(graph *gographviz.Graph) error {
 
 func (smg StateMachineGraph) DrawGraph() error {
 	var err error
-	graph, err := initializeGraph()
+	graph, err := intializeGraphWithDir()
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func (smg StateMachineGraph) DrawGraph() error {
 
 func (smg StateMachineGraph) DrawGraphWithName(name string) error {
 	var err error
-	graph, err := initializeGraph()
+	graph, err := intializeGraphWithDir()
 	if err != nil {
 		return err
 	}
@@ -92,7 +92,7 @@ func (smg StateMachineGraph) DrawGraphWithName(name string) error {
 	return nil
 }
 
-func initializeGraph() (*gographviz.Graph, error) {
+func intializeGraphWithDir() (*gographviz.Graph, error) {
 	var err error
 	graph := gographviz.NewGraph()
 
